@@ -13,9 +13,9 @@ namespace MvcMusicStore.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public string Index()
         {
-            return View();
+            return "Siemka";
         }
 
         public IActionResult Privacy()
