@@ -3,6 +3,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+//builder.Services.AddSqlServer();
+System.Data.Entity.Database.SetInitializer(
+ new MvcMusicStore.Models.SampleData());
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
