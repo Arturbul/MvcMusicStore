@@ -1,13 +1,25 @@
+using Microsoft.EntityFrameworkCore;
+using MvcMusicStore.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-//builder.Services.AddSqlServer();
-System.Data.Entity.Database.SetInitializer(
- new MvcMusicStore.Models.SampleData());
+builder.Services.AddDbContext<MusicStoreEntities>(
+    opt=> opt.UseSqlServer(builder.Configuration.GetConnectionString("MusicStoreEntites")));
+
 
 var app = builder.Build();
+
+// Seed the database.
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<MusicStoreEntities>();
+    context.Database.Migrate(); // ensures that the database schema is up-to-date
+    SampleData.Seed(context);
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

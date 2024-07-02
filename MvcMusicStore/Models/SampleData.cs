@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Microsoft.EntityFrameworkCore;
-using System.Data.Entity;
 
 namespace MvcMusicStore.Models
 {
-    public class SampleData :DropCreateDatabaseIfModelChanges<MusicStoreEntities>
+    public static class SampleData 
     {
-        protected override void Seed(MusicStoreEntities context)
+        public static void Seed(MusicStoreEntities context)
         {
+            if(context.Albums.Any())
+            {
+                return;
+            }
             var genres = new List<Genre>
             {
                 new Genre { Name = "Rock" },
@@ -427,6 +430,8 @@ namespace MvcMusicStore.Models
                 new Album { Title = "Bach: The Cello Suites", Genre = genres.Single(g => g.Name == "Classical"), Price = 8.99M, Artist = artists.Single(a => a.Name == "Yo-Yo Ma"), AlbumArtUrl = "/Content/Images/placeholder.gif" },
                 new Album { Title = "Ao Vivo [IMPORT]", Genre = genres.Single(g => g.Name == "Latin"), Price = 8.99M, Artist = artists.Single(a => a.Name == "Zeca Pagodinho"), AlbumArtUrl = "/Content/Images/placeholder.gif" },
             }.ForEach(a => context.Albums.Add(a));
+
+            context.SaveChanges();
         }
     }
 }

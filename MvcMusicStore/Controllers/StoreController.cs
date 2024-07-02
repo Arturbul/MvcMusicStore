@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MvcMusicStore.Models;
 using System.Web;
 
@@ -6,7 +7,11 @@ namespace MvcMusicStore.Controllers
 {
     public class StoreController : Controller
     {
-        MusicStoreEntities storeDB = new MusicStoreEntities();
+        private readonly MusicStoreEntities storeDB;
+        public StoreController(MusicStoreEntities storeDB)
+        {
+            this.storeDB =  storeDB;
+        }
         // GET: /Store/
         public ActionResult Index()
         {
