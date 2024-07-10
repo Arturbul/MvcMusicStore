@@ -6,8 +6,16 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// Configure the session state
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 builder.Services.AddDbContext<MusicStoreEntities>(
-    opt=> opt.UseSqlServer(builder.Configuration.GetConnectionString("MusicStoreEntites")));
+    opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("MusicStoreEntites")));
 
 
 var app = builder.Build();
@@ -26,7 +34,7 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-   // app.UseHsts();
+    // app.UseHsts();
 }
 
 app.UseHttpsRedirection();
@@ -35,6 +43,9 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+// Enable session state
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
