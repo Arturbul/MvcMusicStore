@@ -1,35 +1,39 @@
-﻿
-
-<!DOCTYPE html>
-<html lang="en">
+﻿<!DOCTYPE html>
+<html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewBag.Title</title>
-    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/css/site.css" rel="stylesheet" type="text/css" />
     <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.5.1.min.js"></script>
     <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.1/jquery.validate.min.js"></script>
     <script src="https://ajax.aspnetcdn.com/ajax/mvc/5.2.0/jquery.validate.unobtrusive.min.js"></script>
 </head>
 <body>
     <div id="header">
-        <h1>
-            ASP.NET MVC MUSIC STORE
-        </h1>
+        <h1><a asp-area="" asp-controller="Home" asp-action="Index">ASP.NET Core MVC MUSIC STORE</a></h1>
         <ul id="navlist">
             <li class="first">
-                <a href="/"
-                   id="current">Home</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" id="current">Home</a>
             </li>
             <li>
-                <a href="/Store/">Store</a>
+                <a asp-area="" asp-controller="Store" asp-action="Index">Store</a>
+            </li>
+            <li>
+                @await Component.InvokeAsync("CartSummary")
+            </li>
+            <li>
+                <a asp-area="" asp-controller="StoreManager" asp-action="Index">Admin</a>
             </li>
         </ul>
     </div>
-    @RenderBody()
-    <footer>
-        <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-    </footer>
+    <div id="genre-menu-container">
+        @await Component.InvokeAsync("GenreMenu")
+    </div>
+    <div id="main">
+        @RenderBody()
+    </div>
+    <div id="footer">
+        built with <a href="http://asp.net/mvc">ASP.NET Core MVC</a>
+    </div>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

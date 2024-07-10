@@ -71,14 +71,13 @@ namespace MvcMusicStore.Controllers
             return Json(results);
         }
 
-        // GET: /ShoppingCart/CartSummary
-        //   [ChildActionOnly]
+        /*// GET: /ShoppingCart/CartSummary
         public IActionResult CartSummary()
         {
             var cart = ShoppingCart.GetCart(this.HttpContext);
-
-            ViewData["CartCount"] = cart.GetCount();
-            return View("CartSummary");
-        }
+            int cartCount = cart.GetCount();
+            ViewData["CartCount"] = cartCount;  // Set the ViewData here
+            return PartialView("CartSummary", cartCount);
+        }*/
     }
 }

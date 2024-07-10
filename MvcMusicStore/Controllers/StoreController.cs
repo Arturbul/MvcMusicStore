@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MvcMusicStore.Models;
-using System.Web;
 
 namespace MvcMusicStore.Controllers
 {
@@ -10,7 +9,7 @@ namespace MvcMusicStore.Controllers
         private readonly MusicStoreEntities storeDB;
         public StoreController(MusicStoreEntities storeDB)
         {
-            this.storeDB =  storeDB;
+            this.storeDB = storeDB;
         }
         // GET: /Store/
         public ActionResult Index()
@@ -35,5 +34,14 @@ namespace MvcMusicStore.Controllers
 
             return View(album);
         }
+
+        //
+        /* // GET: /Store/GenreMenu
+
+         public ActionResult GenreMenu()
+         {
+             var genres = storeDB.Genres.ToList();
+             return PartialView(genres);
+         }*/
     }
 }

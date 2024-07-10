@@ -1,8 +1,20 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IList<MvcMusicStore.Models.Album>
+
+@{
+    ViewBag.Title = "ASP.NET MVC Music Store";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div id="promotion">
 </div>
+<h3><em>Fresh</em> off the grill</h3>
+<ul id="album-list">
+    @foreach (var album in Model)
+    {
+        <li>
+            <a asp-controller="Store" asp-action="Details" asp-route-id="@album.AlbumId">
+                <img alt="@album.Title" src="@album.AlbumArtUrl" />
+                <span>@album.Title</span>
+            </a>
+        </li>
+    }
+</ul>
