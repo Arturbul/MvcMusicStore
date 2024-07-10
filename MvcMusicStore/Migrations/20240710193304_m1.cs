@@ -94,8 +94,7 @@ namespace MvcMusicStore.Migrations
                     Country = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(24)", maxLength: 24, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Total = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    PromoCode = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Total = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false)
                 },
                 constraints: table =>
                 {

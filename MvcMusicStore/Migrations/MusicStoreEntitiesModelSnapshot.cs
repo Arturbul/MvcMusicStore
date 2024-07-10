@@ -371,9 +371,6 @@ namespace MvcMusicStore.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<string>("PromoCode")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("State")
                         .IsRequired()
                         .HasMaxLength(40)
@@ -505,7 +502,7 @@ namespace MvcMusicStore.Migrations
             modelBuilder.Entity("MvcMusicStore.Models.OrderDetail", b =>
                 {
                     b.HasOne("MvcMusicStore.Models.Album", "Album")
-                        .WithMany()
+                        .WithMany("OrderDetails")
                         .HasForeignKey("AlbumId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -519,6 +516,11 @@ namespace MvcMusicStore.Migrations
                     b.Navigation("Album");
 
                     b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("MvcMusicStore.Models.Album", b =>
+                {
+                    b.Navigation("OrderDetails");
                 });
 
             modelBuilder.Entity("MvcMusicStore.Models.Genre", b =>

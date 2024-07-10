@@ -4,10 +4,10 @@
     ViewBag.Title = "Address And Payment";
 }
 
-    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.5.1.min.js"></script>
-    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.1/jquery.validate.min.js"></script>
-    <script src="https://ajax.aspnetcdn.com/ajax/mvc/5.2.0/jquery.validate.unobtrusive.min.js"></script>
-
+<!-- Include jQuery and validation scripts -->
+<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.5.1.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.1/jquery.validate.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/mvc/5.2.0/jquery.validate.unobtrusive.min.js"></script>
 
 <h2>Address And Payment</h2>
 <form asp-action="AddressAndPayment" method="post">
@@ -20,16 +20,20 @@
     </fieldset>
     <fieldset>
         <legend>Payment</legend>
-        <p>We're running a promotion: all music is free with the promo code: "FREE"</p>
-        <div class="form-group">
-            <label asp-for="PromoCode" class="control-label"></label>
-            <input asp-for="PromoCode" class="form-control" />
-            <span asp-validation-for="PromoCode" class="text-danger"></span>
+        <p>
+            We're running a promotion: all music is free
+            with the promo code: "FREE"
+        </p>
+        <div class="editor-label">
+            @Html.Label("Promo Code")
+        </div>
+        <div class="editor-field">
+            @Html.TextBox("PromoCode")
         </div>
     </fieldset>
     <button type="submit" class="btn btn-primary">Submit Order</button>
 </form>
 
 @section Scripts {
-    @await Html.PartialAsync("_ValidationScriptsPartial")
+    <partial name="_ValidationScriptsPartial" />
 }

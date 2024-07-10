@@ -59,9 +59,5 @@ namespace MvcMusicStore.Models
         public decimal Total { get; set; }
 
         public virtual List<OrderDetail> OrderDetails { get; set; }
-
-        // Add PromoCode property
-        [Display(Name = "Promo Code")]
-        public string PromoCode { get; set; }
     }
 }
