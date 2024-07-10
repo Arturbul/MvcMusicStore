@@ -1,9 +1,10 @@
 ﻿
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace MvcMusicStore.Models
 {
-    public class MusicStoreEntities : DbContext
+    public class MusicStoreEntities : IdentityDbContext<ApplicationUser>
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -19,6 +20,8 @@ namespace MvcMusicStore.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Album>()
                 .Property(a => a.Price)
                 .HasPrecision(18, 2);

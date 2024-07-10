@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MvcMusicStore.Models;
 
@@ -16,6 +17,11 @@ builder.Services.AddSession(options =>
 
 builder.Services.AddDbContext<MusicStoreEntities>(
     opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("MusicStoreEntites")));
+
+// Identity services
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+    .AddEntityFrameworkStores<MusicStoreEntities>()
+    .AddDefaultTokenProviders();
 
 
 var app = builder.Build();
@@ -42,9 +48,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
-
-// Enable session state
 app.UseSession();
 
 app.MapControllerRoute(

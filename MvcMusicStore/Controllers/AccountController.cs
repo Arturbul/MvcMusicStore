@@ -1,9 +1,8 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MvcMusicStore.Models;
-/*
+
 namespace MvcMusicStore.Controllers
 {
     public class AccountController : Controller
@@ -17,7 +16,6 @@ namespace MvcMusicStore.Controllers
             _signInManager = signInManager;
         }
 
-        //
         // GET: /Account/LogOn
         [HttpGet]
         public IActionResult LogOn()
@@ -25,7 +23,6 @@ namespace MvcMusicStore.Controllers
             return View();
         }
 
-        //
         // POST: /Account/LogOn
         [HttpPost]
         public async Task<IActionResult> LogOn(LogOnModel model, string returnUrl)
@@ -35,8 +32,9 @@ namespace MvcMusicStore.Controllers
                 var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
-                        && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
+                    MigrateShoppingCart(model.UserName);
+
+                    if (Url.IsLocalUrl(returnUrl))
                     {
                         return Redirect(returnUrl);
                     }
@@ -50,12 +48,10 @@ namespace MvcMusicStore.Controllers
                     ModelState.AddModelError("", "The user name or password provided is incorrect.");
                 }
             }
-
             // If we got this far, something failed, redisplay form
             return View(model);
         }
 
-        //
         // GET: /Account/LogOff
         [HttpGet]
         public async Task<IActionResult> LogOff()
@@ -64,7 +60,6 @@ namespace MvcMusicStore.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        //
         // GET: /Account/Register
         [HttpGet]
         public IActionResult Register()
@@ -72,7 +67,6 @@ namespace MvcMusicStore.Controllers
             return View();
         }
 
-        //
         // POST: /Account/Register
         [HttpPost]
         public async Task<IActionResult> Register(RegisterModel model)
@@ -85,6 +79,7 @@ namespace MvcMusicStore.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
+                    MigrateShoppingCart(model.UserName);
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -100,7 +95,6 @@ namespace MvcMusicStore.Controllers
             return View(model);
         }
 
-        //
         // GET: /Account/ChangePassword
         [Authorize]
         [HttpGet]
@@ -109,7 +103,6 @@ namespace MvcMusicStore.Controllers
             return View();
         }
 
-        //
         // POST: /Account/ChangePassword
         [Authorize]
         [HttpPost]
@@ -143,12 +136,20 @@ namespace MvcMusicStore.Controllers
             return View(model);
         }
 
-        //
         // GET: /Account/ChangePasswordSuccess
         [HttpGet]
         public IActionResult ChangePasswordSuccess()
         {
             return View();
         }
+
+        private void MigrateShoppingCart(string userName)
+        {
+            // Associate shopping cart items with logged-in user
+            var cart = ShoppingCart.GetCart(this.HttpContext);
+
+            cart.MigrateCart(userName);
+            HttpContext.Session.SetString(ShoppingCart.CartSessionKey, userName);
+        }
     }
-}*/
+}
